@@ -823,6 +823,9 @@ define([
             }
 
             _captionsRenderer.resize();
+            if (_isMobile) {
+                _controlbar.checkControlSize(width);
+            }
         }
 
         this.resize = function(width, height) {

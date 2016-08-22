@@ -91,8 +91,11 @@ define([
                 volumeTooltip,
                 muteButton;
 
+            // Do not display duration and time elapsed on mobile player if the width is smaller than this
+            this._minWidthForTimeDisplay = 450;
+
             // Create the playlistTooltip as long as visualplaylist from the config is not false
-            if(this._model.get('visualplaylist') !== false) {
+            if (this._model.get('visualplaylist') !== false) {
                 playlistTooltip = new Playlist('jw-icon-playlist', this._localization.playlist);
             }
 
@@ -360,6 +363,16 @@ define([
         },
         onFullscreen : function(model, val) {
             utils.toggleClass(this.elements.fullscreen.element(), 'jw-off', val);
+        },
+        checkControlSize : function(containerWidth) {
+            this.containerWidth = containerWidth || this.containerWidth;
+            if (this.containerWidth && this.containerWidth < this._minWidthForTimeDisplay) {
+                this.elements.elapsed.style.display = 'none';
+                this.elements.duration.style.display = 'none';
+            } else {
+                this.elements.elapsed.style.display = '';
+                this.elements.duration.style.display = '';
+            }
         },
 
         element: function() {
